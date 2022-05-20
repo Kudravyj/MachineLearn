@@ -31,7 +31,7 @@ $num5 = array(
 );
 
 $weights = [];
-for($i = 0; $i <= 15; $i++){
+for($i = 0; $i <= 14; $i++){
     $weights[] = 0;
 }
 $bias = 7;
@@ -41,30 +41,36 @@ function proceed($number)
     global $weights;
     global $bias;
     $net = 0;
-    for($t = 0; $t <= 15; $t++){
-        var_dump($number[$t]);
-        var_dump($weights[$t]);
-        $net += round($number[$t])* $weights[$t];
+    for($t = 0; $t <= 14; $t++){
+        $net += ((int)$number[$t] * ((int)$weights[$t]));
     }
-    return $net >= $bias;
+    if($net >= $bias){
+        return 1;
+    }
+    else
+        return 0;
 }
 function decrease($number){
-    for($s=0; $s <= 15; $s++){
+    global $weights;
+    global $bias;
+    for($s=0; $s <= 14; $s++){
         if (round($number[$s]) == 1){
-            $weights[$s] += 1;
+            (int)$weights[$s] -= 1;
         }
     }
 }
 function increase($number){
-    for($s=0; $s <= 15; $s++){
+    global $weights;
+    global $bias;
+    for($s=0; $s <= 14; $s++){
         if (round($number[$s]) == 1){
-            $weights[$s] += 1;
+            (int)$weights[$s] += 1;
         }
     }
 }
 
 # Тренировка сети
-$count = 1000;
+$count = 100000;
 
 for($r=0; $r<= $count; $r++){
     $option = rand(0, 9);
@@ -73,37 +79,38 @@ for($r=0; $r<= $count; $r++){
             decrease($nums[$option]);
         }
     }
-}
-    # Если сеть выдала True/Да/1, то наказываем ее
-    if(proceed($nums[$option])){
-        decrease($nums[$option]);
-    }
     # Если получилось число 5
     else{
-        echo($weights);
+        if(!proceed($nums[5])){
+           increase($nums[5]);
+        }
     }
     # Если сеть выдала False/Нет/0, то показываем, что эта цифра - то, что нам нужно
-    if(!proceed($num5)){
-       increase($num5);
+}
+?>
+<pre>
+<?php
+    for($x=0; $x < count($weights); $x++){
+        echo "$x :" . "$weights[$x] \r\n";
     }
-    echo("0 это 5? ". proceed($num[0]));
-    echo("1 это 5? ". proceed($num[1]));
-    echo("2 это 5? ". proceed($num[2]));
-    echo("3 это 5? ". proceed($num[3]));
-    echo("4 это 5? ". proceed($num[4]));
-    echo("6 это 5? ". proceed($num[6]));
-    echo("7 это 5? ". proceed($num[7]));
-    echo("8 это 5? ". proceed($num[8]));
-    echo("9 это 5? ". proceed($num[9]). '\n');
+    echo("0 это 5? ". proceed($nums[0]). "\r\n");
+    echo("1 это 5? ". proceed($nums[1]). "\r\n");
+    echo("2 это 5? ". proceed($nums[2]). "\r\n");
+    echo("3 это 5? ". proceed($nums[3]). "\r\n");
+    echo("4 это 5? ". proceed($nums[4]). "\r\n");
+    echo("6 это 5? ". proceed($nums[6]). "\r\n");
+    echo("7 это 5? ". proceed($nums[7]). "\r\n");
+    echo("8 это 5? ". proceed($nums[8]). "\r\n");
+    echo("9 это 5? ". proceed($nums[9]). "\r\n");
 
     # Прогон по тестовой выборке
-    echo("Узнал 5? ". proceed($num5));
-    echo("Узнал 5 - 1? ". proceed($num5[1]));
-    echo("Узнал 5 - 2? ". proceed($num5[2]));
-    echo("Узнал 5 - 3? ". proceed($num5[3]));
-    echo("Узнал 5 - 4? ". proceed($num5[4]));
-    echo("Узнал 5 - 5? ". proceed($num5[5]));
-    echo("Узнал 5 - 6? ". proceed($num5[6]));
+    echo("Узнал 5? ". proceed($num5[0]). "\r\n");
+    echo("Узнал 5 - 1? ". proceed($num5[1]). "\r\n");
+    echo("Узнал 5 - 2? ". proceed($num5[2]). "\r\n");
+    echo("Узнал 5 - 3? ". proceed($num5[3]). "\r\n");
+    echo("Узнал 5 - 4? ". proceed($num5[4]). "\r\n");
+    echo("Узнал 5 - 5? ". proceed($num5[5]). "\r\n");
 ?>
+<pre>
 </body>
 </html>
