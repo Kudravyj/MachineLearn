@@ -1,13 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    
 <?php
 $nums = array(
     array(1,1,1,1,0,1,1,0,1,1,0,1,1,1,1),
@@ -34,7 +24,7 @@ $weights = [];
 for($i = 0; $i <= 14; $i++){
     $weights[] = 0;
 }
-$bias = 7;
+$bias = 6;
 
 function proceed($number)
 {
@@ -70,7 +60,7 @@ function increase($number){
 }
 
 # Тренировка сети
-$count = 100000;
+$count = 10000;
 
 for($r=0; $r<= $count; $r++){
     $option = rand(0, 9);
@@ -87,9 +77,6 @@ for($r=0; $r<= $count; $r++){
     }
     # Если сеть выдала False/Нет/0, то показываем, что эта цифра - то, что нам нужно
 }
-?>
-<pre>
-<?php
     for($x=0; $x < count($weights); $x++){
         echo "$x :" . "$weights[$x] \r\n";
     }
@@ -111,6 +98,3 @@ for($r=0; $r<= $count; $r++){
     echo("Узнал 5 - 4? ". proceed($num5[4]). "\r\n");
     echo("Узнал 5 - 5? ". proceed($num5[5]). "\r\n");
 ?>
-<pre>
-</body>
-</html>
