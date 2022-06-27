@@ -42,8 +42,8 @@ body{
     display: grid;
     grid-template-columns: repeat(var(--size), 1fr);
     grid-template-rows: repeat(var(--size), 1fr);
-    gap: 3px;
-    padding: 3px;
+    gap: 1px;
+    padding: 1px;
 }
 .pixel{
     background-color: rgb(254, 254, 254);
